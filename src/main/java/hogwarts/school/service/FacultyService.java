@@ -1,16 +1,21 @@
 package hogwarts.school.service;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import hogwarts.school.model.Faculty;
 import hogwarts.school.model.Student;
 import hogwarts.school.repository.FacultyRepository;
 import java.util.*;
 @Service
-@AllArgsConstructor
 @NoArgsConstructor
 public class FacultyService {
     private FacultyRepository facultyRepository;
+
+    public FacultyService(FacultyRepository facultyRepository) {
+        this.facultyRepository = facultyRepository;
+    }
+
     public Faculty createFaculty(Faculty faculty) {
         return facultyRepository.save(faculty);
     }
