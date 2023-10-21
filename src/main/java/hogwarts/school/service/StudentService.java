@@ -8,7 +8,6 @@ import hogwarts.school.model.Student;
 import hogwarts.school.repository.StudentRepository;
 import java.util.*;
 @Service
-@NoArgsConstructor
 public class StudentService {
     private StudentRepository studentRepository;
 
