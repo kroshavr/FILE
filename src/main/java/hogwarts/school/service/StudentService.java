@@ -9,7 +9,7 @@ import hogwarts.school.repository.StudentRepository;
 import java.util.*;
 @Service
 public class StudentService {
-    private StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
 
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
@@ -39,5 +39,17 @@ public class StudentService {
     }
     public Faculty getFacultyOfStudent(long id) {
         return studentRepository.findById(id).get().getFaculty();
+    }
+
+    public Integer getNumberOfAllStudents () {
+        return studentRepository.getNumberOfAllStudents();
+    }
+
+    public Integer getAvgAgeStudents () {
+        return studentRepository.getAvgAgeStudents();
+    }
+
+    public Collection<Student> getFiveLastStudents () {
+        return studentRepository.getFiveLastStudents();
     }
 }
