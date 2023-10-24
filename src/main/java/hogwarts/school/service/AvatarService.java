@@ -6,12 +6,14 @@ import hogwarts.school.repository.AvatarRepository;
 import hogwarts.school.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Objects;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
@@ -59,4 +61,7 @@ public class AvatarService {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
+    public List<Avatar> getAllAvatars(Integer pageNumber, Integer pageSize) {
+        return avatarRepository.findAll(PageRequest.of(pageNumber - 1, pageSize)).getContent();
+    }
 }
