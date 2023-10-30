@@ -1,7 +1,6 @@
 package hogwarts.school.service;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import hogwarts.school.model.Faculty;
 import hogwarts.school.model.Student;
@@ -11,20 +10,26 @@ import java.util.*;
 public class StudentService {
     private final StudentRepository studentRepository;
 
+    Logger logger = LoggerFactory.getLogger(StudentService.class);
+
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
     public Student newStudent(Student student) {
+        logger.info("Запущен метод добавления нового студента");
         return studentRepository.save(student);
     }
     public Student getStudentById(long id) {
+        logger.info("Запущен метод поиска студента");
         return studentRepository.findById(id).get();
     }
     public Student updatingStudentData (Student student) {
+        logger.info("Запущен метод обновления данных студента");
         return studentRepository.save(student);
     }
     public Student updatingStudentData (long id, Student student) {
+        logger.info("Запущен метод обновления данных студента");
         Student student1 = new Student();
         student1.setId(id);
         student1.setName(student.getName());
@@ -32,24 +37,30 @@ public class StudentService {
         return studentRepository.save(student1);
     }
     public void deleteStudentData (long id) {
+        logger.info("Запущен метод удаления студента");
         studentRepository.deleteById(id);
     }
     public Collection<Student> findByAgeBetween(int min, int max) {
+        logger.info("Запущен метод поиска студентов по возрасту в интервале");
         return studentRepository.findStudentByAgeBetween(min, max);
     }
     public Faculty getFacultyOfStudent(long id) {
+        logger.info("Запущен метод поиска факультета у студента");
         return studentRepository.findById(id).get().getFaculty();
     }
 
     public Integer getNumberOfAllStudents () {
+        logger.info("Запущен метод получения количества студентов");
         return studentRepository.getNumberOfAllStudents();
     }
 
     public Integer getAvgAgeStudents () {
+        logger.info("Запущен метод получения среднего возраста студентов");
         return studentRepository.getAvgAgeStudents();
     }
 
     public Collection<Student> getFiveLastStudents () {
+        logger.info("Запущен метод получения 5 последних студентов");
         return studentRepository.getFiveLastStudents();
     }
 }
