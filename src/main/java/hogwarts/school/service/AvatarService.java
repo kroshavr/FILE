@@ -4,7 +4,8 @@ import hogwarts.school.model.Avatar;
 import hogwarts.school.model.Student;
 import hogwarts.school.repository.AvatarRepository;
 import hogwarts.school.repository.StudentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,9 @@ public class AvatarService {
         this.studentRepository = studentRepository;
     }
 
+    Logger logger = LoggerFactory.getLogger(AvatarService.class);
     public Avatar findAvatar (Long studentId) {
+        logger.info("Запущен метод поиска Аватара");
         Avatar avatar = avatarRepository.findAvatarByStudentId(studentId);
         if (avatar == null) {
             return new Avatar();
@@ -37,6 +40,7 @@ public class AvatarService {
         else return avatar;
     }
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
+        logger.info("Запущен метод добавления Аватара");
         Student student = studentRepository.findStudentById(studentId);
         Path filePath = Path.of(avatarsDir, student + "." + getExtensions(Objects.requireNonNull(avatarFile.getOriginalFilename())));
         Files.createDirectories(filePath.getParent());
@@ -58,10 +62,12 @@ public class AvatarService {
         avatarRepository.save(avatar);
     }
     private String getExtensions(String fileName) {
+        logger.info("Запущен метод получения расширения файла");
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
     public List<Avatar> getAllAvatars(Integer pageNumber, Integer pageSize) {
+        logger.info("Запущен метод поиска всех Аватаров постранично");
         return avatarRepository.findAll(PageRequest.of(pageNumber - 1, pageSize)).getContent();
     }
 }
