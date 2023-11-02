@@ -4,9 +4,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import hogwarts.school.model.Faculty;
 import hogwarts.school.model.Student;
-import hogwarts.school.repository.StudentRepository;
 import hogwarts.school.service.StudentService;
 import java.util.Collection;
+
 @RequestMapping("/student")
 @RestController
 public class StudentController {
@@ -62,5 +62,15 @@ public class StudentController {
     @GetMapping("getFiveLastStudents")
     public Collection<Student> getFiveLastStudents() {
         return studentService.getFiveLastStudents();
+    }
+
+    @GetMapping("/nameStart")
+    public Collection<String> findStudentByNameStartA() {
+        return studentService.findStudentByNameStart();
+    }
+
+    @GetMapping("/avgAgeStudents")
+    public double findStudentsByAvgAge() {
+        return studentService.findStudentsByAvgAge();
     }
 }
