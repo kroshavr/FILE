@@ -1,6 +1,6 @@
 package hogwarts.school.controller;
 
-import hogwarts.school.model.InfoService;
+import hogwarts.school.service.InfoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,5 +19,10 @@ public class InfoController {
     public ResponseEntity<String> getPort() {
         String Port = infoService.getPort();
         return ResponseEntity.ok(Port);
+    }
+
+    @GetMapping("/getIntegerValue")
+    public ResponseEntity<Integer> getIntegerValue () {
+        return ResponseEntity.ok(infoService.getIntegerValue());
     }
 }

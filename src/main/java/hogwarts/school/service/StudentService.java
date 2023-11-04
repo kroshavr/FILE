@@ -6,6 +6,8 @@ import hogwarts.school.model.Faculty;
 import hogwarts.school.model.Student;
 import hogwarts.school.repository.StudentRepository;
 import java.util.*;
+import java.util.stream.Collectors;
+
 @Service
 public class StudentService {
     private final StudentRepository studentRepository;
@@ -20,15 +22,18 @@ public class StudentService {
         logger.info("Запущен метод добавления нового студента");
         return studentRepository.save(student);
     }
+
     public Student getStudentById(long id) {
         logger.info("Запущен метод поиска студента");
         return studentRepository.findById(id).get();
     }
-    public Student updatingStudentData (Student student) {
+
+    public Student updatingStudentData(Student student) {
         logger.info("Запущен метод обновления данных студента");
         return studentRepository.save(student);
     }
-    public Student updatingStudentData (long id, Student student) {
+
+    public Student updatingStudentData(long id, Student student) {
         logger.info("Запущен метод обновления данных студента");
         Student student1 = new Student();
         student1.setId(id);
@@ -36,31 +41,51 @@ public class StudentService {
         student1.setAge(student.getAge());
         return studentRepository.save(student1);
     }
-    public void deleteStudentData (long id) {
+
+    public void deleteStudentData(long id) {
         logger.info("Запущен метод удаления студента");
         studentRepository.deleteById(id);
     }
+
     public Collection<Student> findByAgeBetween(int min, int max) {
         logger.info("Запущен метод поиска студентов по возрасту в интервале");
         return studentRepository.findStudentByAgeBetween(min, max);
     }
+
     public Faculty getFacultyOfStudent(long id) {
         logger.info("Запущен метод поиска факультета у студента");
         return studentRepository.findById(id).get().getFaculty();
     }
 
-    public Integer getNumberOfAllStudents () {
+    public Integer getNumberOfAllStudents() {
         logger.info("Запущен метод получения количества студентов");
         return studentRepository.getNumberOfAllStudents();
     }
 
-    public Integer getAvgAgeStudents () {
+    public Integer getAvgAgeStudents() {
         logger.info("Запущен метод получения среднего возраста студентов");
         return studentRepository.getAvgAgeStudents();
     }
 
-    public Collection<Student> getFiveLastStudents () {
+    public Collection<Student> getFiveLastStudents() {
         logger.info("Запущен метод получения 5 последних студентов");
         return studentRepository.getFiveLastStudents();
+    }
+
+    public Collection<String> findStudentByNameStart() {
+        logger.info("Запущен метод получения студентов, чьи имена начинаются с буквы А");
+        return studentRepository.findAll().stream()
+                .filter(student -> student.getName().toUpperCase().startsWith("А"))
+                .map(student -> student.getName().toUpperCase())
+                .sorted()
+                .collect(Collectors.toList());
+    }
+
+    public double findStudentsByAvgAge() {
+        logger.info("Запущен метод получения среднего возраста всех студентов");
+        return studentRepository.findAll().stream()
+                .mapToDouble(Student::getAge)
+                .average()
+                .getAsDouble();
     }
 }

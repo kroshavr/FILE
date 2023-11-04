@@ -1,13 +1,14 @@
 package hogwarts.school.controller;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import hogwarts.school.model.Faculty;
 import hogwarts.school.model.Student;
 import hogwarts.school.service.FacultyService;
-import java.util.ArrayList;
+
 import java.util.Collection;
+import java.util.Optional;
+
 @RequestMapping("/faculty")
 @RestController
 public class FacultyController {
@@ -47,5 +48,10 @@ public class FacultyController {
     @GetMapping("studentsByID/{id}")
     public Collection<Student> getStudentsByIdOfFaculty(@PathVariable Long id) {
         return facultyService.getStudentsOfFaculty(id);
+    }
+
+    @GetMapping("/longName")
+    public ResponseEntity<Optional<String>> getLongNameFaculty() {
+        return ResponseEntity.ok(facultyService.getLongNameFaculty());
     }
 }
