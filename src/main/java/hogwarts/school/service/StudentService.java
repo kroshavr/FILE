@@ -88,4 +88,42 @@ public class StudentService {
                 .average()
                 .getAsDouble();
     }
+
+    public void printStudent (int id) {
+        System.out.println(studentRepository.findAll().get(id).getName() + " " + id);
+    }
+    public void getStudentByDifferentStreams() {
+        logger.info("Запущен метод получения имен 6 студентов в разных потоках");
+        printStudent(0);
+        printStudent(1);
+
+        new Thread(() -> {
+            printStudent(2);
+            printStudent(3);
+        }).start();
+
+        new Thread(() -> {
+            printStudent(4);
+            printStudent(5);
+        }).start();
+    }
+
+    public synchronized void printSynchronizedStudent(int id) {
+        System.out.println(studentRepository.findAll().get(id).getName() + " " + id);
+    }
+    public void getStudentBySynchronizedDifferentStreams() {
+        logger.info("Запущен метод получения имен 6 студентов в разных синхронизированных потоках");
+        printSynchronizedStudent(0);
+        printSynchronizedStudent(1);
+
+        new Thread(() -> {
+            printSynchronizedStudent(2);
+            printSynchronizedStudent(3);
+        }).start();
+
+        new Thread(() -> {
+            printSynchronizedStudent(4);
+            printSynchronizedStudent(5);
+        }).start();
+    }
 }
