@@ -28,10 +28,6 @@ public class InfoService {
                 .boxed()
                 .limit(1_000_000)
                 .reduce(0, Integer::sum);
-//        int sum = Stream
-//                .iterate(1, a -> a +1)
-//                .limit(1_000_000)
-//                .reduce(0, (a, b) -> a + b );
         long finish = System.currentTimeMillis()-start;
         logger.info("Время выполнения метода получения целочисленного значения: " + finish);
         return sum;

@@ -1,4 +1,5 @@
 package hogwarts.school.controller;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -72,5 +73,15 @@ public class StudentController {
     @GetMapping("/avgAgeStudents")
     public double findStudentsByAvgAge() {
         return studentService.findStudentsByAvgAge();
+    }
+
+    @GetMapping ("/thread")
+    public void getStudentByDifferentStreams() {
+        studentService.getStudentByDifferentStreams();
+    }
+
+    @GetMapping ("/synchronizedThread")
+    public void getStudentBySynchronizedDifferentStreams() {
+        studentService.getStudentBySynchronizedDifferentStreams();
     }
 }
